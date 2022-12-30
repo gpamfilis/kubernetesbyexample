@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pyservice
+spec:
+  selector:
+    app: python-deployment
+  ports:
+    - port: 8080
+      targetPort: 5000
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    component: python-deployment
+  ports:
+      # Outside port.
+    - port: 5000
+      # inside port.
+      targetPort: 5000
